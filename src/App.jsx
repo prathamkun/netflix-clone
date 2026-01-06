@@ -1,45 +1,38 @@
-import React, {useEffect} from 'react'
+import React, { useEffect } from 'react'
 import Home from './pages/Home/Home'
-import { Routes, Route, useNavigate } from 'react-router-dom'
+import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import Login from './pages/Login/Login'
 import Player from './pages/Player/Player'
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
-
+import Movies from './pages/Movies/Movies'
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
 
 import { auth } from './firebase'
 import { onAuthStateChanged } from 'firebase/auth'
 
 const App = () => {
+  const navigate = useNavigate()
+  const location = useLocation()
 
-  const navigate = useNavigate();
-
-
-  useEffect(()=>{
-    onAuthStateChanged(auth, async (user)=>{
-      if(user){
-        console.log("Logged In");
-        navigate('/');
-      }else{
-        console.log("Logged Out");
-        navigate('/login');
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      if (!user && location.pathname !== '/login') {
+        navigate('/login')
       }
     })
-  },[])
 
-
-
+    return () => unsub()
+  }, [navigate, location.pathname])
 
   return (
     <div>
-       <ToastContainer theme='dark' />
+      <ToastContainer theme="dark" />
       <Routes>
-        <Route path='/' element={<Home/>}/>
-        <Route path='/login' element={<Login/>}/>
-        <Route path='/player/:id' element={<Player/>}/>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/movies" element={<Movies />} />
+        <Route path="/player/:id" element={<Player />} />
       </Routes>
-     
-
     </div>
   )
 }
