@@ -98,3 +98,27 @@
         margin-top: 30px;
     }
 }
+.password-field {
+  position: relative;
+  width: 100%;
+}
+
+.password-field input {
+  width: 100%;
+  padding-right: 40px;
+}
+
+.eye-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 20px;
+  cursor: pointer;
+  opacity: 0.7;
+  color:#333;
+}
+
+.eye-icon:hover {
+  opacity: 1;
+}
