@@ -7,6 +7,7 @@ import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
 import { logout } from '../../firebase'
 import { useNavigate, Link } from 'react-router-dom'
+import { library } from '../../data/library'
 
 const Navbar = () => {
   const navRef = useRef()
@@ -22,13 +23,16 @@ const Navbar = () => {
   const [results, setResults] = useState([])
 
   useEffect(() => {
-    window.addEventListener('scroll', () => {
+    const handleScroll = () => {
       if (window.scrollY >= 80) {
         navRef.current.classList.add('nav-dark')
       } else {
         navRef.current.classList.remove('nav-dark')
       }
-    })
+    }
+
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
   const handleImageChange = (e) => {
@@ -48,9 +52,7 @@ const Navbar = () => {
     localStorage.removeItem('profilePhoto')
   }
 
-  const handleSearch = async (value) => {
-    console.log('TMDB TOKEN →', import.meta.env.VITE_TMDB_TOKEN)
-
+  const handleSearch = (value) => {
     setQuery(value)
 
     if (!value.trim()) {
@@ -58,24 +60,17 @@ const Navbar = () => {
       return
     }
 
-    const res = await fetch(
-      `https://api.themoviedb.org/3/search/movie?query=${value}&language=en-US&page=1`,
-      {
-        headers: {
-          accept: 'application/json',
-          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
-        }
-      }
+    const filtered = library.filter(item =>
+      item.title.toLowerCase().includes(value.toLowerCase())
     )
 
-    const data = await res.json()
-    setResults(data.results || [])
+    setResults(filtered)
   }
 
   return (
     <div ref={navRef} className="navbar">
       <div className="navbar-left">
-        <img src={logo} alt="" onClick={() => navigate('/')} />
+        <img src={logo} alt="Logo" onClick={() => navigate('/')} />
         <ul>
           <li onClick={() => navigate('/')}>Home</li>
           <li onClick={() => navigate('/movies')}>TV Shows</li>
@@ -90,7 +85,7 @@ const Navbar = () => {
         <div className="search-box">
           <img
             src={search_icon}
-            alt=""
+            alt="Search"
             className="icons"
             onClick={() => setShowSearch(!showSearch)}
           />
@@ -99,17 +94,17 @@ const Navbar = () => {
             <div className="search-dropdown">
               <input
                 type="text"
-                placeholder="Search movies..."
+                placeholder="Search movies, anime, series..."
                 value={query}
                 onChange={(e) => handleSearch(e.target.value)}
                 autoFocus
               />
 
               <div className="search-results">
-                {results.slice(0, 6).map((movie) => (
+                {results.slice(0, 6).map((item, index) => (
                   <Link
-                    key={movie.id}
-                    to={`/player/${movie.id}`}
+                    key={index}
+                    to={`/player/archive_${item.archiveId}`}
                     className="search-item"
                     onClick={() => {
                       setShowSearch(false)
@@ -117,16 +112,20 @@ const Navbar = () => {
                       setResults([])
                     }}
                   >
-                    {movie.title}
+                    {item.title}
                   </Link>
                 ))}
+
+                {results.length === 0 && query && (
+                  <p className="search-empty">No results found</p>
+                )}
               </div>
             </div>
           )}
         </div>
 
         <p>Children</p>
-        <img src={bell_icon} alt="" className="icons" />
+        <img src={bell_icon} alt="Notifications" className="icons" />
 
         <div className="navbar-profile">
           <img
@@ -135,8 +134,7 @@ const Navbar = () => {
             className="profile"
             onClick={() => fileInputRef.current.click()}
           />
-
-          <img src={caret_icon} alt="" />
+          <img src={caret_icon} alt="Caret" />
 
           <div className="dropdown">
             <p onClick={() => fileInputRef.current.click()}>
