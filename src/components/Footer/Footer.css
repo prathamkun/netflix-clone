@@ -13,6 +13,8 @@
 .footer-icons img{
     width: 30px;
     cursor: pointer;
+    color: white;
+    
 }
 .footer ul{
     display: grid;
