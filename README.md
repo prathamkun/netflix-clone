@@ -1,130 +1,153 @@
-# 🎬 PrathamFlix
+# 🎬 Prathamflix  
+*A Netflix-inspired full-stack streaming web application*
 
-PrathamFlix is a Netflix-inspired streaming platform built using React and JavaScript, powered by the TMDB API for movie data and Firebase for authentication and database management.
-It provides a modern streaming-like experience where users can browse movies, log in securely, and watch trailers directly on the platform.
----
-## Live
+![React](https://img.shields.io/badge/React-18-blue?logo=react)
+![Vite](https://img.shields.io/badge/Vite-fast-purple?logo=vite)
+![Firebase](https://img.shields.io/badge/Firebase-Auth%20%7C%20Firestore-orange?logo=firebase)
+![TMDB](https://img.shields.io/badge/TMDB-API-green)
+![Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)
+![Status](https://img.shields.io/badge/Status-Active-success)
 
-
----
-## 🚀 Features
-
-🔐 Authentication
-
-Secure user Login & Logout
-
-Implemented using Firebase Authentication
-
-User data stored in Firebase Database
-
-🎥 Movie & Trailer Streaming
-
-Watch official trailers of movies, series, anime, and cartoons
-
-Trailers are fetched dynamically using the TMDB API
-
-Embedded video player for seamless playback
 ---
 
-## 🏠 Dynamic Home Screen
+## 🚀 Live Demo
+🔗 **https://prathamflix.vercel.app**
 
-Multiple curated sections such as:
-
-Blockbuster Movies
-
-Only on Netflix (Netflix-inspired category)
-
-Upcoming Movies
-
-Top Picks for You
-
-Popular Movies & Shows
-
-Interactive banners with a Play button to instantly watch trailers
-
-🎞️ Rich Content Categories
-
-Movies
-
-Web Series
-
-Anime
-
-Cartoons
-
-Trending & Popular titles
-
-🔔 User Feedback with Toasts
-
-React Toastify used for:
-
-Login success/error messages
-
-Signup feedback
-
-Logout notifications
-
-Clean and user-friendly alerts
-
-🌐 Responsive UI
-
-Optimized for desktop and modern browsers
-
-Smooth navigation using React Router
 ---
 
-## 🛠️ Tech Stack
+## 📌 About the Project
 
-Frontend: React, JavaScript, CSS
+**Prathamflix** is a modern Netflix-style streaming platform built to demonstrate **real-world frontend engineering skills**, including authentication, protected routing, API integration, custom content management, and responsive UI design.
 
-Authentication: Firebase Authentication
+The project blends:
+- **API-driven content (TMDB trailers)**
+- **Custom movie & series library**
+- **Internet Archive embeds**
+- **Firebase authentication & data handling**
 
-Database: Firebase Firestore
+Designed with scalability and clean architecture in mind.
 
-API: TMDB (The Movie Database)
-
-Routing: React Router
-
-Notifications: React Toastify
-
-Hosting: Vercel
 ---
 
-## 🎯 How It Works
+## ✨ Key Features
 
-Users can sign up or log in securely.
+### 🔐 Authentication & Security
+- Firebase email/password login & signup
+- Auth-protected routes
+- Auto redirect based on user session
+- Logout handling
 
-After login, the home screen displays curated movie sections.
+### 🎥 Streaming Experience
+- TMDB movie trailers (YouTube embed)
+- Public-domain movies via Internet Archive
+- Dedicated Player page with fallback handling
 
-Clicking on a movie or the Play button opens a trailer player.
+### 📚 Custom Content Library
+- Movies
+- Anime & Cartoons
+- TV Series
+- Episode-based navigation
+- Custom thumbnails & descriptions
+- No external API dependency for library content
 
-Movie data and trailers are fetched in real-time from the TMDB API.
+### 🔍 Smart Search (Custom)
+- Instant search across **your own movie library**
+- No external API dependency
+- Click-to-play behavior
 
-Authentication state is managed using Firebase.
+### 👤 User Experience
+- Changeable profile photo (local persistence)
+- Responsive UI (mobile + desktop)
+- Horizontal scrolling rows
+- Netflix-inspired UI/UX
 
-Toast notifications provide instant feedback for user actions.
+### 🌐 Navigation & Layout
+- Home page with categorized rows
+- Dedicated Movies page
+- Navbar shortcuts (TV Shows, Movies, My List, etc.)
+- Footer with external social links
+
 ---
 
-## 📌 Highlights
+## 🛠 Tech Stack
 
-Real-world streaming platform UI
+| Area | Technology |
+|----|----|
+| Frontend | React, React Router |
+| Build Tool | Vite |
+| Authentication | Firebase Auth |
+| Database | Firebase Firestore |
+| APIs | TMDB, Internet Archive |
+| Styling | Custom CSS |
+| Deployment | Vercel |
 
-Secure authentication flow
-
-API-driven dynamic content
-
-Clean navigation and user experience
-
-Production-ready deployment on Vercel
 ---
 
-## ⚠️ Disclaimer
+## 📂 Project Structure
 
-PrathamFlix is a Netflix-inspired project created for educational and learning purposes only.
-It is not affiliated with or endorsed by Netflix. All movie data and trailers are sourced from the TMDB API.
+src/
+├── assets/
+├── components/
+│ ├── Navbar/
+│ ├── Footer/
+│ ├── TitleCards/
+├── pages/
+│ ├── Home/
+│ ├── Login/
+│ ├── Movies/
+│ ├── Player/
+├── data/
+│ └── library.js
+├── firebase.js
+├── App.jsx
+├── main.jsx
+
+
 ---
 
-## 👨‍💻 Author
+## 🔑 Environment Setup
+
+Create a `.env` file:
+
+```env
+VITE_TMDB_TOKEN=your_tmdb_bearer_token
+```
+---
+🧪 Run Locally
+```
+git clone https://github.com/prathamkun/netflix-clone.git
+cd netflix-clone
+npm install
+npm run dev
+```
+---
+## 📈 What This Project Demonstrates 
+
+✔ Real-world React architecture
+✔ Auth-based routing & state handling
+✔ API consumption & error handling
+✔ Custom search logic
+✔ Responsive UI design
+✔ Deployment-ready codebase
+✔ Clean component separation
+---
+## 🔗 Socials
+
+🐦 Twitter / X → https://x.com/prathamiscoding
+
+📸 Instagram → https://www.instagram.com/pratham.huh/
+---
+## 📜 Disclaimer
+
+This project is created for educational & portfolio purposes only.
+All videos are embedded from public sources or official APIs.
+No copyrighted media is hosted.
+
+---
+### 👨‍💻 Author
 
 Pratham Kun
-Frontend Developer | React & JavaScript Enthusiast
+Frontend Developer | React | Firebase | UI Engineering
+
+⭐ If you like this project, consider starring the repo!
+
