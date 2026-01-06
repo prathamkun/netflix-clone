@@ -7,44 +7,49 @@ const Player = () => {
   const { id } = useParams()
   const navigate = useNavigate()
 
-  const isArchiveMovie = id.startsWith("archive_")
-  const archiveId = isArchiveMovie ? id.replace("archive_", "") : null
+  const isArchiveMovie = id.startsWith('archive_')
+  const archiveId = isArchiveMovie ? id.replace('archive_', '') : null
 
   const [apiData, setApiData] = useState({
-    name: "",
-    key: "",
-    published_at: "",
-    type: ""
+    name: '',
+    key: '',
+    published_at: '',
+    type: ''
   })
 
   const options = {
     method: 'GET',
     headers: {
       accept: 'application/json',
-      Authorization:
-        'Bearer YOUR_TMDB_TOKEN_HERE'
+      Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
     }
   }
 
   useEffect(() => {
     if (!isArchiveMovie) {
-      fetch(`https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`, options)
+      fetch(
+        `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
+        options
+      )
         .then(res => res.json())
-        .then(res => setApiData(res.results[0]))
+        .then(res => {
+          if (res?.results?.length > 0) {
+            setApiData(res.results[0])
+          }
+        })
         .catch(err => console.error(err))
     }
-  }, [id])
+  }, [id, isArchiveMovie])
 
   return (
-    <div className='player'>
+    <div className="player">
       <img
         src={back_arrow_icon}
         alt="Back"
-        onClick={() => navigate(-1)}
         className="back-btn"
+        onClick={() => navigate(-1)}
       />
 
-      {/* ARCHIVE MOVIE */}
       {isArchiveMovie ? (
         <iframe
           width="100%"
@@ -54,8 +59,7 @@ const Player = () => {
           frameBorder="0"
           allowFullScreen
         />
-      ) : (
-        /* TMDB / YOUTUBE TRAILER */
+      ) : apiData.key ? (
         <iframe
           width="90%"
           height="90%"
@@ -64,10 +68,11 @@ const Player = () => {
           frameBorder="0"
           allowFullScreen
         />
+      ) : (
+        <div className="player-loading">Loading trailer...</div>
       )}
 
-      {/* INFO ONLY FOR TMDB */}
-      {!isArchiveMovie && apiData?.published_at && (
+      {!isArchiveMovie && apiData.published_at && (
         <div className="player-info">
           <p>{apiData.published_at.slice(0, 10)}</p>
           <p>{apiData.name}</p>

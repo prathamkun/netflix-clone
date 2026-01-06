@@ -16,12 +16,16 @@ const App = () => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
+      const publicRoutes = ['/login']
+
+      const isPlayerRoute = location.pathname.startsWith('/player/')
+
       if (user) {
         if (location.pathname === '/login') {
           navigate('/', { replace: true })
         }
       } else {
-        if (location.pathname !== '/login') {
+        if (!publicRoutes.includes(location.pathname) && !isPlayerRoute) {
           navigate('/login', { replace: true })
         }
       }
