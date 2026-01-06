@@ -6,7 +6,7 @@ import bell_icon from '../../assets/bell_icon.svg'
 import profile_img from '../../assets/profile_img.png'
 import caret_icon from '../../assets/caret_icon.svg'
 import { logout } from '../../firebase'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, Link } from 'react-router-dom'
 
 const Navbar = () => {
   const navRef = useRef()
@@ -16,6 +16,10 @@ const Navbar = () => {
   const [profilePhoto, setProfilePhoto] = useState(
     localStorage.getItem('profilePhoto') || profile_img
   )
+
+  const [showSearch, setShowSearch] = useState(false)
+  const [query, setQuery] = useState('')
+  const [results, setResults] = useState([])
 
   useEffect(() => {
     window.addEventListener('scroll', () => {
@@ -44,6 +48,30 @@ const Navbar = () => {
     localStorage.removeItem('profilePhoto')
   }
 
+  const handleSearch = async (value) => {
+    console.log('TMDB TOKEN →', import.meta.env.VITE_TMDB_TOKEN)
+
+    setQuery(value)
+
+    if (!value.trim()) {
+      setResults([])
+      return
+    }
+
+    const res = await fetch(
+      `https://api.themoviedb.org/3/search/movie?query=${value}&language=en-US&page=1`,
+      {
+        headers: {
+          accept: 'application/json',
+          Authorization: `Bearer ${import.meta.env.VITE_TMDB_TOKEN}`
+        }
+      }
+    )
+
+    const data = await res.json()
+    setResults(data.results || [])
+  }
+
   return (
     <div ref={navRef} className="navbar">
       <div className="navbar-left">
@@ -59,7 +87,44 @@ const Navbar = () => {
       </div>
 
       <div className="navbar-right">
-        <img src={search_icon} alt="" className="icons" />
+        <div className="search-box">
+          <img
+            src={search_icon}
+            alt=""
+            className="icons"
+            onClick={() => setShowSearch(!showSearch)}
+          />
+
+          {showSearch && (
+            <div className="search-dropdown">
+              <input
+                type="text"
+                placeholder="Search movies..."
+                value={query}
+                onChange={(e) => handleSearch(e.target.value)}
+                autoFocus
+              />
+
+              <div className="search-results">
+                {results.slice(0, 6).map((movie) => (
+                  <Link
+                    key={movie.id}
+                    to={`/player/${movie.id}`}
+                    className="search-item"
+                    onClick={() => {
+                      setShowSearch(false)
+                      setQuery('')
+                      setResults([])
+                    }}
+                  >
+                    {movie.title}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+        </div>
+
         <p>Children</p>
         <img src={bell_icon} alt="" className="icons" />
 

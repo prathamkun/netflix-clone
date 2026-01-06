@@ -101,3 +101,45 @@
         gap: 10px;
     }
 }
+.search-box {
+  position: relative;
+}
+
+.search-dropdown {
+  position: absolute;
+  top: 40px;
+  right: 0;
+  width: 260px;
+  background: #111;
+  padding: 10px;
+  border-radius: 4px;
+  z-index: 50;
+}
+
+.search-dropdown input {
+  width: 100%;
+  padding: 8px;
+  background: #222;
+  border: none;
+  outline: none;
+  color: white;
+  border-radius: 4px;
+}
+
+.search-results {
+  margin-top: 8px;
+  max-height: 240px;
+  overflow-y: auto;
+}
+
+.search-item {
+  display: block;
+  padding: 6px;
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.search-item:hover {
+  background: #333;
+}
