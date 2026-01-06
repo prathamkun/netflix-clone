@@ -82,27 +82,26 @@ Designed with scalability and clean architecture in mind.
 | Deployment | Vercel |
 
 ---
-
 ## 📂 Project Structure
 
+```bash
 src/
 ├── assets/
 ├── components/
-│ ├── Navbar/
-│ ├── Footer/
-│ ├── TitleCards/
+│   ├── Navbar/
+│   ├── Footer/
+│   ├── TitleCards/
 ├── pages/
-│ ├── Home/
-│ ├── Login/
-│ ├── Movies/
-│ ├── Player/
+│   ├── Home/
+│   ├── Login/
+│   ├── Movies/
+│   ├── Player/
 ├── data/
-│ └── library.js
+│   └── library.js
 ├── firebase.js
 ├── App.jsx
 ├── main.jsx
-
-
+```
 ---
 
 ## 🔑 Environment Setup
