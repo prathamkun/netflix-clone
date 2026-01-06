@@ -16,8 +16,14 @@ const App = () => {
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
-      if (!user && location.pathname !== '/login') {
-        navigate('/login')
+      if (user) {
+        if (location.pathname === '/login') {
+          navigate('/', { replace: true })
+        }
+      } else {
+        if (location.pathname !== '/login') {
+          navigate('/login', { replace: true })
+        }
       }
     })
 
